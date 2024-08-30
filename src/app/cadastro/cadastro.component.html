@@ -1,27 +1,115 @@
 <main class="principal">
   <h2 class="principal__titulo">Dados do cadastro</h2>
 
-  <form class="principal__formulario" id="formulario">
+  <form
+    class="principal__formulario"
+    id="formulario"
+    #f="ngForm"
+    (ngSubmit)="cadastrar(f)"
+  >
     <h3 class="principal__subtitulo">Dados pessoais</h3>
     <div class="formulario__campo">
       <label class="campo__etiqueta" for="nome">Nome Completo</label>
-      <input name="nome" id="nome" class="campo__escrita">
+      <input
+        name="nome"
+        id="nome"
+        class="campo__escrita"
+        ngModel
+        required
+        minlength="2"
+        #nome="ngModel"
+      />
+      <div *ngIf="(nome?.touched && nome?.invalid) || nome?.dirty">
+        <app-mensagem
+          class="erro__texto"
+          *ngIf="nome?.errors?.['required']"
+          mensagem="O nome é obrigatório"
+        ></app-mensagem>
+        <app-mensagem
+          class="erro__texto"
+          *ngIf="nome?.errors?.['minlength']"
+          mensagem="O nome deve ter no mínimo 2 caracteres"
+        ></app-mensagem>
+      </div>
     </div>
     <div class="formulario__dupla">
       <div class="formulario__campo">
         <label class="campo__etiqueta" for="nascimento">Nascimento</label>
-        <input name="nascimento" id="nascimento" type="date" class="campo__escrita"/>
+        <input
+          name="nascimento"
+          id="nascimento"
+          type="date"
+          class="campo__escrita"
+          ngModel
+          required
+          #nascimento="ngModel"
+        />
+        <div
+          *ngIf="
+            (nascimento?.touched && nascimento?.invalid) || nascimento?.dirty
+          "
+        >
+          <app-mensagem
+            class="erro__texto"
+            *ngIf="nascimento?.errors?.['required']"
+            mensagem="O nascimento é obrigatório"
+          ></app-mensagem>
+        </div>
       </div>
       <div class="formulario__campo">
         <label class="campo__etiqueta" for="telefone">Contato</label>
-        <input name="telefone" id="telefone" type="tel" placeholder="(XX) XXXXX-XXXX" class="campo__escrita"/>
+        <input
+          name="telefone"
+          id="telefone"
+          type="tel"
+          placeholder="(XX) XXXXX-XXXX"
+          class="campo__escrita"
+          ngModel
+          required
+          pattern="(\(?\d{2}\)?\s?)(\d{5}\-?\d{4})"
+          #telefone="ngModel"
+        />
+        <div
+          *ngIf="(telefone?.touched && telefone?.invalid) || telefone?.dirty"
+        >
+          <app-mensagem
+            class="erro__texto"
+            *ngIf="telefone?.errors?.['required']"
+            mensagem="O telefone é obrigatório"
+          ></app-mensagem>
+          <app-mensagem
+            class="erro__texto"
+            *ngIf="telefone?.errors?.['pattern']"
+            mensagem="O telefone deve ser válido. Ex. (11) 9999-1234"
+          ></app-mensagem>
+        </div>
       </div>
     </div>
     <div class="formulario__campo">
       <label class="campo__etiqueta" for="email">E-mail</label>
-      <input name="email" id="email" type="email" class="campo__escrita"/>
+      <input
+        name="email"
+        id="email"
+        type="email"
+        class="campo__escrita"
+        ngModel
+        required
+        pattern="^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$"
+        #email="ngModel"
+      />
+      <div *ngIf="(email?.touched && email?.invalid) || email?.dirty">
+        <app-mensagem
+          class="erro__texto"
+          *ngIf="email?.errors?.['required']"
+          mensagem="O email é obrigatório"
+        ></app-mensagem>
+        <app-mensagem
+          class="erro__texto"
+          *ngIf="email?.errors?.['pattern']"
+          mensagem="O email deve ser válido. Ex. email@exemplo.com"
+        ></app-mensagem>
+      </div>
     </div>
-
 
     <h3 class="principal__subtitulo">Endereço</h3>
 
@@ -88,8 +176,7 @@
           <option value="EX">Estrangeiro</option>
         </select>
       </div>
-
     </div>
     <button type="submit" class="formulario__botao">Enviar formulário</button>
-    </form>
+  </form>
 </main>
