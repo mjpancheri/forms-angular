@@ -42,6 +42,7 @@
           class="campo__escrita"
           ngModel
           required
+          maiorIdade
           #nascimento="ngModel"
         />
         <div
@@ -53,6 +54,11 @@
             class="erro__texto"
             *ngIf="nascimento?.errors?.['required']"
             mensagem="O nascimento é obrigatório"
+          ></app-mensagem>
+          <app-mensagem
+            class="erro__texto"
+            *ngIf="nascimento?.errors?.['maiorIdade']"
+            mensagem="Deve ter mais de 18 anos de idade"
           ></app-mensagem>
         </div>
       </div>
