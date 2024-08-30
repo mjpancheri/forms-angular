@@ -121,18 +121,69 @@
 
     <div class="formulario__campo">
       <label class="campo__etiqueta" for="cep">CEP</label>
-      <input name="cep" id="cep" class="campo__escrita" />
-      <div id="erro"></div>
+      <input
+        name="cep"
+        id="cep"
+        class="campo__escrita"
+        ngModel
+        required
+        pattern="^(\d{5})(-?\d{3})$"
+        minlength="8"
+        maxlength="9"
+        #cep="ngModel"
+        (keyup)="consultarCep($event, f)"
+      />
+      <div id="erro" class="erro__texto"></div>
+      <div *ngIf="(cep?.touched && cep?.invalid) || cep?.dirty">
+        <app-mensagem
+          class="erro__texto"
+          *ngIf="cep?.errors?.['required']"
+          mensagem="O cep é obrigatório"
+        ></app-mensagem>
+        <app-mensagem
+          class="erro__texto"
+          *ngIf="cep?.errors?.['pattern']"
+          mensagem="Cep inválido. Ex. 12345-000"
+        ></app-mensagem>
+      </div>
     </div>
 
     <div class="formulario__campo">
       <label class="campo__etiqueta" for="endereco">Endereço</label>
-      <input name="endereco" id="endereco" class="campo__escrita" />
+      <input
+        name="endereco"
+        id="endereco"
+        class="campo__escrita"
+        ngModel
+        required
+        #endereco="ngModel"
+      />
+      <div *ngIf="(endereco?.touched && endereco?.invalid) || endereco?.dirty">
+        <app-mensagem
+          class="erro__texto"
+          *ngIf="endereco?.errors?.['required']"
+          mensagem="O endereço é obrigatório"
+        ></app-mensagem>
+      </div>
     </div>
     <div class="formulario__dupla">
       <div class="formulario__campo">
         <label class="campo__etiqueta" for="numero">Numero</label>
-        <input name="numero" id="numero" class="campo__escrita" />
+        <input
+          name="numero"
+          id="numero"
+          class="campo__escrita"
+          ngModel
+          required
+          #numero="ngModel"
+        />
+        <div *ngIf="(numero?.touched && numero?.invalid) || numero?.dirty">
+          <app-mensagem
+            class="erro__texto"
+            *ngIf="numero?.errors?.['required']"
+            mensagem="O número é obrigatório"
+          ></app-mensagem>
+        </div>
       </div>
       <div class="formulario__campo">
         <label class="campo__etiqueta" for="complemento">Complemento</label>
@@ -141,17 +192,52 @@
     </div>
     <div class="formulario__campo">
       <label class="campo__etiqueta" for="bairro">Bairro</label>
-      <input name="bairro" id="bairro" class="campo__escrita" />
+      <input
+        name="bairro"
+        id="bairro"
+        class="campo__escrita"
+        ngModel
+        required
+        #bairro="ngModel"
+      />
+      <div *ngIf="(bairro?.touched && bairro?.invalid) || bairro?.dirty">
+        <app-mensagem
+          class="erro__texto"
+          *ngIf="bairro?.errors?.['required']"
+          mensagem="O bairro é obrigatório"
+        ></app-mensagem>
+      </div>
     </div>
     <div class="formulario__dupla">
       <div class="formulario__campo">
         <label class="campo__etiqueta" for="cidade">Cidade</label>
-        <input name="cidade" id="cidade" class="campo__escrita" />
+        <input
+          name="cidade"
+          id="cidade"
+          class="campo__escrita"
+          ngModel
+          required
+          #cidade="ngModel"
+        />
+        <div *ngIf="(cidade?.touched && cidade?.invalid) || cidade?.dirty">
+          <app-mensagem
+            class="erro__texto"
+            *ngIf="cidade?.errors?.['required']"
+            mensagem="O cidade é obrigatório"
+          ></app-mensagem>
+        </div>
       </div>
 
       <div class="formulario__campo">
         <label class="campo__etiqueta" for="estado">UF</label>
-        <select id="estado" name="estado" class="campo__escrita">
+        <select
+          id="estado"
+          name="estado"
+          class="campo__escrita"
+          ngModel
+          required
+          #estado="ngModel"
+        >
           <option value="AC">Acre</option>
           <option value="AL">Alagoas</option>
           <option value="AP">Amapá</option>
@@ -181,6 +267,13 @@
           <option value="TO">Tocantins</option>
           <option value="EX">Estrangeiro</option>
         </select>
+        <div *ngIf="(estado?.touched && estado?.invalid) || estado?.dirty">
+          <app-mensagem
+            class="erro__texto"
+            *ngIf="estado?.errors?.['required']"
+            mensagem="O estado é obrigatório"
+          ></app-mensagem>
+        </div>
       </div>
     </div>
     <button type="submit" class="formulario__botao">Enviar formulário</button>
